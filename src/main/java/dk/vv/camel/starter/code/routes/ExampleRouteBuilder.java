@@ -75,6 +75,10 @@ public class ExampleRouteBuilder extends EndpointRouteBuilder {
 
                 // send orderlines to warehouse
 
+                .process(exchange ->{
+                    logger.info("Sending orders to warehouse");
+                })
+
                 .setHeader("CamelFileName",constant("warehouse_item_list.json"))
                 .to("file:src/main/resources")
                 ;
@@ -87,6 +91,10 @@ public class ExampleRouteBuilder extends EndpointRouteBuilder {
                     }});
                 })
                 .marshal(new JacksonXMLDataFormat())
+
+                .process(exchange ->{
+                    logger.info("Sending orders to invoice service");
+                })
 
                 .setHeader("CamelFileName",constant("orderData.xml"))
                 .to("file:src/main/resources")
