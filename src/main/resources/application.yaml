@@ -15,15 +15,5 @@ camel:
         redeliveryMultiplier: 2
         redeliveryMaxDelaySec: 2000
 
-      routes:
-
-        multicastRoute:
-          in: rabbitmq:test?queue=multicast.q&routingKey=multicast.key&autoAck=false&autoDelete=false&skipExchangeDeclare=true&skipDlqDeclare=true&reQueue=true
-          routeId: multicast-route--id
-
-        fromQueue:
-          in: rabbitmq:test?queue=starter.code.q&routingKey=routing.key.one&autoAck=false&autoDelete=false&skipExchangeDeclare=true&skipDlqDeclare=true&reQueue=true
-          routeId: from-queue-route-id
-
 
 

@@ -41,6 +41,10 @@ public class ExampleRouteBuilder extends EndpointRouteBuilder {
         ((FastCamelContext)this.camelContext).setName(configuration.contextName());
 
         from("rabbitmq:example.dx?queue=example.q&routingKey=example.key&autoAck=false&autoDelete=false&skipExchangeDeclare=true&skipDlqDeclare=true&reQueue=true").routeId("example-route-id")
+                .process(exchange -> {
+                    logger.info("Started processing orders");
+                })
+
                 .unmarshal().json(JsonLibrary.Jackson, Order[].class)
 
 
@@ -66,9 +70,6 @@ public class ExampleRouteBuilder extends EndpointRouteBuilder {
                      })
                 .end()
 
-                .process(e->{
-                    System.out.println(e.getIn().getBody());
-                })
 
                 .marshal().json()
 
